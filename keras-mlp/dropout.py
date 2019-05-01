@@ -12,7 +12,7 @@ run = wandb.init()
 config = run.config
 config.optimizer = "adam"
 config.epochs = 50
-config.dropout = 0.4
+config.dropout = 0.4 #percentage to dropout from the layer
 config.hidden_nodes = 100
 
 # load data
@@ -35,7 +35,7 @@ num_classes = y_train.shape[1]
 # create model
 model=Sequential()
 model.add(Flatten(input_shape=(img_width,img_height)))
-model.add(Dropout(config.dropout))
+model.add(Dropout(config.dropout)) # here's where the first dropout happens - drops from the previous layer
 model.add(Dense(config.hidden_nodes, activation='relu'))
 model.add(Dropout(config.dropout))
 model.add(Dense(num_classes, activation='softmax'))
