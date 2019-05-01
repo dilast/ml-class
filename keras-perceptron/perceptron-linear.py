@@ -16,16 +16,16 @@ img_width = X_train.shape[1]
 img_height = X_train.shape[2]
 
 # one hot encode outputs
-y_train = to_categorical(y_train)
+y_train = to_categorical(y_train) #to_categorical performs one hot encoding, shape of y_train will become 60_000 by 10
 y_test = to_categorical(y_test)
 labels = range(10)
 
-num_classes = y_train.shape[1]
+num_classes = y_train.shape[1] #final dimension of y_train, which is 10
 
 # create model
 model = Sequential()
 model.add(Flatten(input_shape=(img_width, img_height)))
-model.add(Dense(num_classes))
+model.add(Dense(num_classes, activation="sigmoid")) # Adds Dense layer with 10 perceptrons, outputs 10 numbers, will have 7850 weights, 784 per perceptron because of the one hot encoding plus 1 extra bias for each perceptron
 model.compile(loss='mse', optimizer='adam',
               metrics=['accuracy'])
 

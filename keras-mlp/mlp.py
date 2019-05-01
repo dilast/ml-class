@@ -9,12 +9,13 @@ import json
 from wandb.keras import WandbCallback
 import wandb
 
+# config is an object that lets you keep track of your hyperparameters, this is optional
 run = wandb.init()
 config = run.config
 config.optimizer = "adam"
 config.epochs = 50
 config.dropout = 10
-config.hidden_nodes = 100
+config.hidden_nodes = 100 #size of hidden layer
 
 # load data
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
@@ -37,6 +38,10 @@ num_classes = y_train.shape[1]
 # create model
 model = Sequential()
 model.add(Flatten(input_shape=(img_width, img_height)))
+
+model.add(Dense(120, activation='relu')) # add more hiddenn layers for fun, probably not for real though
+model.add(Dense(120, activation='relu')) # add more hiddenn layers for fun
+
 model.add(Dense(config.hidden_nodes, activation='relu'))
 model.add(Dense(num_classes, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer=config.optimizer,

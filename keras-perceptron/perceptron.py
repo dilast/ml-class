@@ -24,9 +24,14 @@ num_classes = y_train.shape[1]
 # create model
 model = Sequential()
 model.add(Flatten(input_shape=(img_width, img_height)))
-model.add(Dense(num_classes, activation='softmax'))
+model.add(Dense(num_classes, activation='softmax')) 
 model.compile(loss='categorical_crossentropy', optimizer='adam',
               metrics=['accuracy'])
+
+# see keras doc for list of optimizers, but adam is generally pretty good. It is common to adjust the initial parameters of the optimizer, particularly re starting point and learning rate
+
+# use categorical_crossentropy when doing multiclass problems. makes network output probability to every class
+# softmax is specific type of sigmoid - each output is between 0 and 1 and outputs add up to 1
 
 # Fit the model
 model.fit(X_train, y_train, epochs=10, validation_data=(X_test, y_test),

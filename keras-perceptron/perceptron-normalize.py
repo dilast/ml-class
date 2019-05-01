@@ -15,6 +15,8 @@ config = run.config
 img_width = X_train.shape[1]
 img_height = X_train.shape[2]
 
+# keras initializes weights on the assumption that data is normalized, so it's a good idea to normalize the incoming data first
+
 # normalize data
 X_train = X_train.astype('float32') / 255.
 X_test = X_test.astype('float32') / 255.
