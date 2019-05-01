@@ -4,7 +4,7 @@ import glob
 import argparse
 
 from keras import __version__
-from keras.applications.densenet import DenseNet121, preprocess_input
+from keras.applications.densenet import DenseNet121, preprocess_input # uses DenseNet
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
 from keras.preprocessing.image import ImageDataGenerator
@@ -22,10 +22,13 @@ config.img_height = 224
 config.epochs = 10
 config.batch_size = 128
 
+# imports base model and makes layers not trainable
 def setup_to_transfer_learn(model, base_model):
     """Freeze all layers and compile the model"""
     for layer in base_model.layers:
         layer.trainable = False
+    
+    #manually instantiate the optimizer - want a lower learning rate for transfer models
     optimizer = Adam(lr=0.0001,
                      beta_1=0.9,
                      beta_2=0.999,
@@ -58,7 +61,9 @@ base_model = DenseNet121(input_shape=(config.img_width, config.img_height, 3),
                          weights='imagenet',
                          include_top=False,
                          pooling='avg')
+# include_top=False leaves out the last layer, which is then added below
 
+# takes the input and adds a new last trainable layer
 model = add_new_last_layer(base_model, nb_classes)
 
 # transfer learning

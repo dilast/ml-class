@@ -12,7 +12,7 @@ K.set_image_dim_ordering('th')
 
 def VGG_16(weights_path=None):
     model = Sequential()
-    model.add(ZeroPadding2D((1,1),input_shape=(3,224,224)))
+    model.add(ZeroPadding2D((1,1),input_shape=(3,224,224))) # note zero padding, doesn't change image size
     model.add(Convolution2D(64, 3, 3, activation='relu'))
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(64, 3, 3, activation='relu'))
